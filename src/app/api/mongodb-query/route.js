@@ -103,3 +103,107 @@ async function initializeSession(db, sessionId, dbType) {
         const collection = db.collection(sessionCollectionName);
         
         // Check if already initialized
+        const count = await collection.countDocuments();
+        if (count === 0 && SAMPLE_DATA[collectionName]) {
+            await collection.insertMany(SAMPLE_DATA[collectionName]);
+        }
+    }
+}
+
+// Parse and execute MongoDB query with session isolation
+async function executeQuery(db, queryString, sessionId) {
+    // Remove comments and trim
+    queryString = queryString.replace(/\/\/.*/g, '').trim();
+
+    // Parse: db.collection.operation(...)
+    const regex = /db\.(\w+)\.(\w+)\((.*)\)/s;
+    const match = queryString.match(regex);
+
+    if (!match) {
+        throw new Error('Invalid query format. Use: db.collection.operation(...)');
+    }
+
+    const [, collectionName, operation, argsString] = match;
+    
+    // Add session ID to collection name
+    const sessionCollectionName = `${collectionName}_${sessionId}`;
+    const collection = db.collection(sessionCollectionName);
+
+    // Parse arguments
+    let args = [];
+    if (argsString.trim()) {
+        try {
+            // Safely evaluate arguments
+            args = new Function(`'use strict'; return [${argsString}]`)();
+        } catch (e) {
+            throw new Error('Invalid query arguments: ' + e.message);
+        }
+    }
+
+    // Execute operation
+    switch (operation) {
+        case 'find': {
+            const query = args[0] || {};
+            const options = args[1] || {};
+            
+            let cursor = collection.find(query);
+            
+            if (options.sort) cursor = cursor.sort(options.sort);
+            if (options.limit) cursor = cursor.limit(options.limit);
+            else cursor = cursor.limit(100);
+            
+            return await cursor.toArray();
+        }
+        
+        case 'findOne': {
+            const doc = await collection.findOne(args[0] || {});
+            return doc ? [doc] : [];
+        }
+        
+        case 'insertOne': {
+            const result = await collection.insertOne(args[0]);
+            return [{ acknowledged: true, insertedId: result.insertedId }];
+        }
+        
+        case 'insertMany': {
+            const result = await collection.insertMany(args[0]);
+            return [{ acknowledged: true, insertedCount: result.insertedCount }];
+        }
+        
+        case 'updateOne': {
+            const result = await collection.updateOne(args[0], args[1]);
+            return [{ 
+                acknowledged: true, 
+                matchedCount: result.matchedCount,
+                modifiedCount: result.modifiedCount 
+            }];
+        }
+        
+        case 'updateMany': {
+            const result = await collection.updateMany(args[0], args[1]);
+            return [{ 
+                acknowledged: true, 
+                matchedCount: result.matchedCount,
+                modifiedCount: result.modifiedCount 
+            }];
+        }
+        
+        case 'deleteOne': {
+            const result = await collection.deleteOne(args[0]);
+            return [{ acknowledged: true, deletedCount: result.deletedCount }];
+        }
+        
+        case 'deleteMany': {
+            const result = await collection.deleteMany(args[0]);
+            return [{ acknowledged: true, deletedCount: result.deletedCount }];
+        }
+        
+        case 'countDocuments': {
+            const count = await collection.countDocuments(args[0] || {});
+            return [{ count }];
+        }
+        
+        case 'aggregate': {
+            const pipeline = args[0] || [];
+            return await collection.aggregate(pipeline).toArray();
+        }
