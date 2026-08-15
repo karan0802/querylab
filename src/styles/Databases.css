@@ -1,0 +1,77 @@
+.schema-card {
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+.schema-card:hover {
+    border-color: rgba(83, 18, 148, 0.3);
+    box-shadow: 0 4px 12px rgba(83, 18, 148, 0.08);
+}
+
+.schema-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.schema-header strong {
+    font-size: 1.1rem;
+    color: #531294;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+}
+
+/* Badge Styles - Matching docs badges */
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.badge-rows {
+    background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+    color: #6b1bb8;
+}
+
+.badge-pk {
+    background: #dbeafe;
+    color: #1e40af;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+}
+
+.badge-fk {
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+}
+
+/* Column List */
+.column-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.column-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+.column-item code {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
