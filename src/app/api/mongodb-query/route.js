@@ -207,3 +207,107 @@ async function executeQuery(db, queryString, sessionId) {
             const pipeline = args[0] || [];
             return await collection.aggregate(pipeline).toArray();
         }
+        
+        default:
+            throw new Error(`Operation '${operation}' is not supported yet`);
+    }
+}
+
+// POST - Execute query
+export async function POST(req) {
+    try {
+        const { query, sessionId, dbType } = await req.json();
+
+        if (!query) {
+            return Response.json({ error: 'Query is required' }, { status: 400 });
+        }
+
+        if (!sessionId) {
+            return Response.json({ error: 'Session ID is required' }, { status: 400 });
+        }
+
+        const client = await connectToDatabase();
+        const db = client.db(DB_NAME);
+
+        // Track session activity
+        await updateSessionActivity(db, sessionId);
+
+        // Initialize session collections if needed
+        if (dbType && dbType !== 'custom') {
+            await initializeSession(db, sessionId, dbType);
+        }
+
+        // Execute query
+        const results = await executeQuery(db, query, sessionId);
+
+        return Response.json({
+            success: true,
+            results,
+            count: results.length
+        });
+    } catch (error) {
+        console.error('MongoDB query error:', error);
+        return Response.json({
+            error: error.message || 'Failed to execute query'
+        }, { status: 500 });
+    }
+}
+
+// GET - Get schema for session
+export async function GET(req) {
+    try {
+        const { searchParams } = new URL(req.url);
+        const sessionId = searchParams.get('sessionId');
+        const dbType = searchParams.get('dbType') || 'users';
+
+        if (!sessionId) {
+            return Response.json({ error: 'Session ID is required' }, { status: 400 });
+        }
+
+        const client = await connectToDatabase();
+        const db = client.db(DB_NAME);
+
+        // Track session activity
+        await updateSessionActivity(db, sessionId);
+
+        // Initialize session collections if they don't exist
+        if (dbType !== 'custom') {
+            await initializeSession(db, sessionId, dbType);
+        }
+
+        // Get all collections for this session
+        const allCollections = await db.listCollections().toArray();
+        const sessionCollections = allCollections.filter(c => c.name.endsWith(`_${sessionId}`));
+
+        const schema = {};
+
+        // Get allowed collections for this database type
+        const allowedCollections = DB_TYPE_COLLECTIONS[dbType] || [];
+
+        // Get list of ALL sample data collection names
+        const sampleCollectionNames = Object.keys(SAMPLE_DATA); // ['users', 'orders', 'posts', 'comments', 'products', 'customers']
+
+        for (const collection of sessionCollections) {
+            const collectionName = collection.name.replace(`_${sessionId}`, '');
+            
+            if (dbType === 'custom') {
+                // For custom: ONLY show collections that are NOT in sample data
+                if (!sampleCollectionNames.includes(collectionName)) {
+                    const sampleDoc = await db.collection(collection.name).findOne();
+                    schema[collectionName] = sampleDoc ? Object.keys(sampleDoc) : [];
+                }
+            } else {
+                // For other database types: show only allowed collections
+                if (allowedCollections.includes(collectionName)) {
+                    const sampleDoc = await db.collection(collection.name).findOne();
+                    schema[collectionName] = sampleDoc ? Object.keys(sampleDoc) : [];
+                }
+            }
+        }
+
+        return Response.json({ success: true, schema });
+    } catch (error) {
+        console.error('Schema fetch error:', error);
+        return Response.json({ error: 'Failed to fetch schema' }, { status: 500 });
+    }
+}
