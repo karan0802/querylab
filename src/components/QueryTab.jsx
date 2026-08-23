@@ -287,3 +287,148 @@ const QueryTab = () => {
 
                         {/* Select the database you want to practice on */}
                         <label className="form-label">Select Database Type</label>
+                        <div className='row database-grid'>
+                            <button 
+                                className={`btn col-3 ${ currentDatabase === 'users' ? 'btn-active-db' : 'btn-inactive-db' }`}
+                                onClick={() => setCurrentDatabase('users')}
+                            >
+                                Users & Orders
+                            </button>
+                            <button 
+                                className={`btn col-3 ${ currentDatabase === 'blog' ? 'btn-active-db' : 'btn-inactive-db' }`}
+                                onClick={() => setCurrentDatabase('blog')}
+                            >
+                                Blog
+                            </button> 
+                            <button 
+                                className={`btn col-3 ${ currentDatabase === 'ecommerce' ? 'btn-active-db' : 'btn-inactive-db' }`}
+                                onClick={() => setCurrentDatabase('ecommerce')}
+                            >
+                                E-Commerce
+                            </button> 
+                            <button 
+                                className={`btn col-3 ${ currentDatabase === 'custom' ? 'btn-active-db' : 'btn-inactive-db' }`}
+                                onClick={() => setCurrentDatabase('custom')}
+                            >
+                                Custom
+                            </button>  
+                        </div>
+                    </div>
+                </div>
+
+                {/* MongoDB Alert */}
+                {dbMode === 'mongodb' && !mongoConnected && (
+                <div className="alert alert-warning">
+                    <h4>MongoDB Local Setup Required</h4>
+                    <p>Download and run our installer to connect MongoDB locally.</p>
+                    <button 
+                        className="btn btn-warning btn-sm" 
+                        // TODO: Add a new function that sends a ping to db api 
+                        // and then update mongoConnected state
+                        onClick={() => setMongoConnected(true)}
+                    >
+                        I've installed it - Connect
+                    </button>
+                </div>
+                )}
+
+                {/* {dbMode === 'mongodb' && mongoConnected && (
+                    <div className="alert alert-success">
+                        Success: Connected to MongoDB at localhost:27017
+                    </div>
+                )} */}
+                
+                {/* Box to shwo to schema of the database being currently used */}
+                { dbMode === 'sql' && (
+                    <div className="card">
+                        <div className="card-header">
+                            <span className="header-title">
+                                Database Schema
+                            </span>
+                            <button className="btn mx-1" onClick={() => setShowSchema(!showSchema)}>
+                                <FaEye className='icon'/>
+                                { showSchema ? 'Hide' : 'Show' }
+                            </button>
+                        </div>
+                        {showSchema && (
+                            <div className="card-body">
+                                <pre className="schema-pre">
+                                {schema.map((item, idx) => (
+                                    <div key={idx}>
+                                    <strong className="schema-type">{item[1]}</strong>: {item[0]}
+                                    {item[2] && <div className="schema-sql">{item[2]}</div>}
+                                    {idx < schema.length - 1 && <hr className="schema-divider" />}
+                                    </div>
+                                ))}
+                                </pre>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {dbMode === 'mongodb' && mongoConnected && (
+                    <div className="card">
+                        <div className="card-header">
+                            <span className="header-title">Database Collections</span>
+                            <button className="btn mx-1" onClick={() => setShowSchema(!showSchema)}>
+                                <FaEye className='icon'/>
+                                {showSchema ? 'Hide' : 'Show'}
+                            </button>
+                        </div>
+                        {showSchema && mongoSchema && (
+                            <div className="card-body">
+                                <div className="mongo-schema">
+                                    {Object.entries(mongoSchema).map(([collectionName, fields], idx) => (
+                                        <div key={idx} className="collection-item">
+                                            <div className="collection-header">
+                                                <strong className="collection-name">Collection: {collectionName}</strong>
+                                                <span className="field-count">{fields.length} fields</span>
+                                            </div>
+                                            <div className="collection-fields">
+                                                {fields.map((field, fieldIdx) => (
+                                                    <span key={fieldIdx} className="field-badge">
+                                                        {field}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                            {idx < Object.keys(mongoSchema).length - 1 && <hr className="schema-divider" />}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+
+                {/* Query Writer */}
+                <div className="card">
+                    <div className="card-body">
+                        <div className="editor-header">
+                        <label className="form-label">
+                            {dbMode === 'sql' ? 'SQL Query Editor' : 'MongoDB Query Editor'}
+                        </label>
+                        <button
+                            className="btn-link"
+                            onClick={() => setQuery(sampleQueries[dbMode][currentDatabase])}
+                        >
+                            Load Sample Queries
+                        </button>
+                        </div>
+                            {/* {dbMode === 'mongodb' && (
+                                <button
+                                    className="btn btn-primary mb-3"
+                                    onClick={resetSession}
+                                >
+                                    Reset My Data
+                                </button>
+                            )} */}
+                            <Editor
+                                height="200px"
+                                language={dbMode === 'sql' ? 'sql' : 'javascript'} // ✅ 'sql' for SQL, 'javascript' for MongoDB
+                                theme="vs-light"
+                                value={query}
+                                className='query-editor'
+                                onChange={(value) => setQuery(value || "")}
+                                options={{
+                                    fontSize: 14,
