@@ -89,3 +89,94 @@ const Page = () => {
                 <h4>Immediate Feedback</h4>
                 <p>
                   Write query → Execute → See results. The learning loop is measured in seconds, not hours.
+                </p>
+              </div>
+              <div className="feature-card">
+                <div className="feature-number">03</div>
+                <h4>Risk-Free Experimentation</h4>
+                <p>
+                  Isolated sessions mean you can't break anything. DROP TABLE? No problem. Start fresh anytime.
+                </p>
+              </div>
+              <div className="feature-card">
+                <div className="feature-number">04</div>
+                <h4>Dual Database Learning</h4>
+                <p>
+                  Compare SQL and MongoDB side-by-side. One platform, two paradigms.
+                </p>
+              </div>
+            </div>
+
+            {/* Creator Section */}
+            <h2 className="section-title" style={{ marginTop: '3rem' }}>About the Creator</h2>
+            
+            <div className="creator-card">
+              <div className="creator-avatar" style={{ padding: 0, overflow: 'hidden' }}>
+                <img 
+                  src="/ManavB.jpg" 
+                  alt="Manav Bansal" 
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} 
+                />
+              </div>
+              <div className="creator-content">
+                <h3>Manav Bansal</h3>
+                <p className="creator-tagline">Full-Stack Developer • Educator • Open Source Advocate</p>
+                <p>
+                  I'm a solo developer who believes education should be accessible to everyone. QueryLab started as a weekend project to help my mentees, but it grew into something bigger—a platform that's helped thousands of students take their first steps with databases.
+                </p>
+                <p>
+                  This project is built entirely in my free time, with no funding or team. Every feature, every bug fix, every documentation page—it's all a labor of love. Your feedback and support are what keep this project alive and growing.
+                </p>
+                <div className="creator-links">
+                  <a href="https://github.com/manavbansal1" target="_blank" rel="noopener noreferrer" className="social-link github">
+                    <FaGithub /> GitHub
+                  </a>
+                  <a href="mailto:bansalmanav39@gmail.com" className="social-link email">
+                    <FaEnvelope /> Email
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Tech Stack */}
+            <h2 className="section-title" style={{ marginTop: '3rem' }}>Built With Modern Tech</h2>
+            
+            <div className="tech-grid">
+              <div className="tech-item">
+                <h4>Frontend</h4>
+                <p>Next.js 14, React 18, Monaco Editor, Bootstrap 5</p>
+              </div>
+              <div className="tech-item">
+                <h4>Backend</h4>
+                <p>Next.js API Routes, MongoDB Node Driver, sql.js</p>
+              </div>
+              <div className="tech-item">
+                <h4>Database</h4>
+                <p>MongoDB Atlas (Cloud), SQLite (Browser)</p>
+              </div>
+              <div className="tech-item">
+                <h4>AI Integration</h4>
+                <p>Google Gemini for intelligent error explanations</p>
+              </div>
+              <div className="tech-item">
+                <h4>Deployment</h4>
+                <p>Vercel with automated session cleanup</p>
+              </div>
+              <div className="tech-item">
+                <h4>Features</h4>
+                <p>Session isolation, Auto-cleanup, Responsive design</p>
+              </div>
+            </div>
+
+            {/* Stats */}
+            <div className="info-card highlight" style={{ marginTop: '3rem' }}>
+              <h3>📊 QueryLab by the Numbers</h3>
+              <div className="stats-grid">
+                <div className="stat-item">
+                  <div className="stat-value">2</div>
+                  <div className="stat-label">Database Systems</div>
+                </div>
+                <div className="stat-item">
+                  <div className="stat-value">3</div>
+                  <div className="stat-label">Sample Databases</div>
+                </div>
