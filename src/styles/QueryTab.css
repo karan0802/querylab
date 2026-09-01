@@ -584,3 +584,198 @@
 }
 
 ::-webkit-scrollbar-track {
+    background: #f3f4f6;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+/* Selection Color */
+::selection {
+    background: rgba(83, 18, 148, 0.2);
+    color: #111827;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .database-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .querylab-container {
+        padding: 1rem;
+    }
+
+    .querylab-content {
+        padding-top: 100px;
+    }
+
+    .querylab-card-body,
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .card-header {
+        padding: 1rem 1.25rem;
+        /* flex-direction: column;
+        gap: 0.75rem;
+        align-items: flex-start; */
+    }
+
+    .button-group {
+        grid-template-columns: 1fr;
+    }
+
+    .database-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .button-row {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .editor-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    .error-section h4 {
+        font-size: 1rem;
+    }
+    
+    .error-code {
+        font-size: 0.85rem;
+        padding: 0.875rem;
+    }
+    
+    .btn-ai-help {
+        font-size: 0.95rem;
+        padding: 0.75rem 1.25rem;
+    }
+    
+    .ai-header {
+        padding: 0.875rem 1rem;
+    }
+    
+    .ai-header h5 {
+        font-size: 0.95rem;
+    }
+    
+    .ai-content {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .querylab-container {
+        padding: 0.75rem;
+    }
+
+    .database-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-label {
+        font-size: 0.85rem;
+    }
+
+    .btn {
+        padding: 0.875rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+
+.mongo-schema {
+    background: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+.collection-item {
+    margin-bottom: 1.5rem;
+}
+
+.collection-item:last-child {
+    margin-bottom: 0;
+}
+
+.collection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #531294;
+}
+
+.collection-name {
+    color: #531294;
+    font-weight: 800;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.field-count {
+    background: rgba(83, 18, 148, 0.1);
+    color: #531294;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.collection-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.field-badge {
+    background: white;
+    color: #374151;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid #e5e7eb;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    transition: all 0.2s ease;
+}
+
+.field-badge:hover {
+    background: #f3f4f6;
+    border-color: #531294;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(83, 18, 148, 0.1);
+}
+
+/* Responsive adjustments for MongoDB schema */
+@media (max-width: 768px) {
+    .collection-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .field-badge {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.75rem;
+    }
+}
