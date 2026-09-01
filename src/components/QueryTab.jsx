@@ -432,3 +432,146 @@ const QueryTab = () => {
                                 onChange={(value) => setQuery(value || "")}
                                 options={{
                                     fontSize: 14,
+                                    minimap: { enabled: false },
+                                    wordWrap: "on",
+                                    automaticLayout: true,
+                                    scrollBeyondLastLine: false,
+                                }}
+                            />
+                            <div className="button-row">
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={executeUserQuery}
+                                    disabled={!query.trim() || loading}
+                                >
+                                    {loading ? (
+                                    <>
+                                        <span className="spinner"></span>
+                                        Executing...
+                                    </>
+                                    ) : (
+                                    <>
+                                        <FaPlay className="icon" />
+                                        Execute Query
+                                    </>
+                                    )}
+                                </button>
+                                <button
+                                    className="btn btn-secondary"
+                                    onClick={() => { setResults(null); setError(null); setExecutionTime(null); setQuery(""); setAiResponse(null); }}
+                                >
+                                    <FaTrash className="icon" />
+                                    Clear
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                
+                {/* Execution Time */}
+                {executionTime && !error && (
+                    <div className="alert alert-success">
+                        ✅ Query executed in <strong>{executionTime}s</strong>
+                    </div>
+                )}
+
+                {error && (
+                    <div className="alert alert-danger">
+                        <div className="error-section">
+                            <h4>Error</h4>
+                            <code className="error-code">{error}</code>
+                        </div>
+                        <button 
+                            className="btn btn-ai-help"  
+                            onClick={askGemini}
+                            disabled={aiLoading}
+                        >
+                            {aiLoading ? (
+                                <>
+                                    <span className="spinner"></span>
+                                    Asking Gemini...
+                                </>
+                            ) : (
+                                <>
+                                    <FaRobot/>
+                                    Ask Gemini for Help
+                                </>
+                            )}
+                        </button>
+                        {aiResponse && (
+                            <div className="ai-response">
+                                <div className="ai-header">
+                                    <h5>💡 AI Suggestion</h5>
+                                    <button className="close-ai-btn" onClick={closeAiResponse} title="Close suggestion">
+                                        <FaTimes />
+                                    </button>
+                                </div>
+                                <div className="ai-content ai-markdown"
+                                    dangerouslySetInnerHTML={{ __html: renderMarkdown(aiResponse) }}
+                                >
+                                    {}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {/* Success Message if the query is successfull */}
+                {results && results.type === 'success' && (
+                    <div className="alert alert-success">
+                        <strong>✅ {results.message}</strong>
+                        {results.changes > 0 && <div>{results.changes} row(s) affected</div>}
+                    </div>
+                )}
+
+                {/* Results Table if sql */}
+                {results && results.type === 'table' && (
+                    <div className="card">
+                        <div className="card-header">
+                        <strong>Query Results</strong>
+                        <span className="badge badge-primary">{results.rowCount} rows</span>
+                        </div>
+                        <div className="card-body">
+                        <div className="table-container">
+                            <table className="results-table">
+                            <thead>
+                                <tr>
+                                {results.columns.map((col, idx) => (
+                                    <th key={`col-${idx}`}>{col}</th>
+                                ))}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {results.rows.map((row, rowIdx) => (
+                                <tr key={`row-${rowIdx}`}>
+                                    {results.columns.map((col, colIdx) => (
+                                    <td key={`cell-${rowIdx}-${colIdx}`}>{row[col]}</td>
+                                    ))}
+                                </tr>
+                                ))}
+                            </tbody>
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Results JSON  if mongodb */}
+                {results && results.type === 'json' && (
+                    <div className="card">
+                        <div className="card-header">
+                        <strong>Query Results</strong>
+                        <span className="badge badge-success">{results.documentCount} documents</span>
+                        </div>
+                        <div className="card-body">
+                        <pre className="json-pre">
+                            <code>{JSON.stringify(results.data, null, 2)}</code>
+                        </pre>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </div>
+  );
+}
+
+export default QueryTab
