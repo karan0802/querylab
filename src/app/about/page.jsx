@@ -180,3 +180,93 @@ const Page = () => {
                   <div className="stat-value">3</div>
                   <div className="stat-label">Sample Databases</div>
                 </div>
+                <div className="stat-item">
+                  <div className="stat-value">0</div>
+                  <div className="stat-label">Installation Required</div>
+                </div>
+                <div className="stat-item">
+                  <div className="stat-value">100%</div>
+                  <div className="stat-label">Free & Open Source</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Vision */}
+            <h2 className="section-title" style={{ marginTop: '3rem' }}>The Vision</h2>
+            
+            <div className="info-card">
+              <p>
+                QueryLab isn't just about executing queries—it's about democratizing database education. I envision a future where:
+              </p>
+              <ul className="vision-list">
+                <li>Every student, regardless of their computer or location, can learn databases</li>
+                <li>Database concepts are taught through hands-on practice, not just theory</li>
+                <li>AI assists learning without replacing the struggle that leads to understanding</li>
+                <li>Open source tools make education accessible to all</li>
+              </ul>
+              <p>
+                This is just the beginning. With community support, QueryLab will evolve with more databases, interactive tutorials, query challenges, and performance analytics.
+              </p>
+            </div>
+
+            {/* Support */}
+            <h2 className="section-title" style={{ marginTop: '3rem' }}>Support the Project</h2>
+            
+            <div className="support-grid">
+              <div className="support-card">
+                <span className="support-emoji">⭐</span>
+                <h4>Star on GitHub</h4>
+                <p>Show your support and help others discover QueryLab</p>
+              </div>
+              <div className="support-card">
+                <span className="support-emoji">🐛</span>
+                <h4>Report Bugs</h4>
+                <p>Found an issue? Let me know so I can fix it</p>
+              </div>
+              <div className="support-card">
+                <span className="support-emoji">💡</span>
+                <h4>Suggest Features</h4>
+                <p>Have ideas? I'd love to hear them</p>
+              </div>
+              <div className="support-card">
+                <span className="support-emoji">📢</span>
+                <h4>Spread the Word</h4>
+                <p>Share with students, teachers, and developers</p>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="examples-cta" style={{ marginTop: '3rem' }}>
+              <div className="cta-content">
+                <div className="cta-icon">
+                  <FaRocket />
+                </div>
+                <h3>Ready to Start Learning?</h3>
+                <p>
+                  Jump in and write your first query in seconds. No setup, no hassle—just learning.
+                </p>
+                <div className="cta-buttons">
+                  <Link href="/" className="cta-button">
+                    Start Practicing
+                  </Link>
+                  <a 
+                    href="https://github.com/manavbansal1/query-lab" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="cta-button cta-button-secondary"
+                  >
+                    <FaGithub style={{ marginRight: '8px' }} />
+                    View on GitHub
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Page;
