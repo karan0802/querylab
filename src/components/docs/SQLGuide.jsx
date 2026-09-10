@@ -115,3 +115,119 @@ ORDER BY p.views DESC;`}</pre>
         </div>
       </CollapsibleSection>
 
+      {/* Aggregate Functions */}
+      <CollapsibleSection
+        id="sql-aggregates"
+        title="Aggregate Functions"
+        isExpanded={expandedSections['sql-aggregates']}
+        toggle={toggleSection}
+      >
+        <p>Aggregate functions perform calculations on sets of rows.</p>
+
+        <div className="code-block">
+          <pre>{`-- COUNT - Number of rows
+SELECT COUNT(*) FROM users;
+SELECT COUNT(DISTINCT category) FROM products;
+
+-- SUM - Total of values
+SELECT SUM(amount) FROM orders;
+
+-- AVG - Average value
+SELECT AVG(price) FROM products;
+
+-- MAX/MIN - Highest/Lowest value
+SELECT MAX(age) FROM users;
+SELECT MIN(price) FROM products;
+
+-- GROUP BY - Group results
+SELECT category, COUNT(*) as product_count, AVG(price) as avg_price
+FROM products
+GROUP BY category;
+
+-- HAVING - Filter grouped results
+SELECT category, AVG(price) as avg_price
+FROM products
+GROUP BY category
+HAVING AVG(price) > 100;`}</pre>
+        </div>
+      </CollapsibleSection>
+
+      {/* INSERT, UPDATE, DELETE */}
+      <CollapsibleSection
+        id="sql-modify"
+        title="INSERT, UPDATE, DELETE"
+        isExpanded={expandedSections['sql-modify']}
+        toggle={toggleSection}
+      >
+        <h4>INSERT - Adding Data</h4>
+        <div className="code-block">
+          <pre>{`-- Insert single row
+INSERT INTO users (name, email, age) 
+VALUES ('John Doe', 'john@example.com', 30);
+
+-- Insert multiple rows
+INSERT INTO products (name, category, price, stock) 
+VALUES 
+  ('Laptop', 'Electronics', 999.99, 10),
+  ('Mouse', 'Electronics', 29.99, 50);`}</pre>
+        </div>
+
+        <h4>UPDATE - Modifying Data</h4>
+        <div className="code-block">
+          <pre>{`-- Update single field
+UPDATE users SET age = 31 WHERE name = 'John Doe';
+
+-- Update multiple fields
+UPDATE products 
+SET price = 899.99, stock = 15 
+WHERE name = 'Laptop';
+
+-- Update with calculation
+UPDATE products SET price = price * 0.9 WHERE category = 'Electronics';`}</pre>
+        </div>
+
+        <h4>DELETE - Removing Data</h4>
+        <div className="code-block">
+          <pre>{`-- Delete specific rows
+DELETE FROM users WHERE age < 18;
+
+-- Delete all rows (use carefully!)
+DELETE FROM temporary_table;`}</pre>
+        </div>
+      </CollapsibleSection>
+
+      {/* CREATE TABLE */}
+      <CollapsibleSection
+        id="sql-create"
+        title="CREATE TABLE - Database Design"
+        isExpanded={expandedSections['sql-create']}
+        toggle={toggleSection}
+      >
+        <div className="code-block">
+          <pre>{`-- Create a new table
+CREATE TABLE employees (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  department TEXT,
+  salary DECIMAL(10,2),
+  hire_date DATE DEFAULT CURRENT_DATE
+);
+
+-- Create table with foreign key
+CREATE TABLE tasks (
+  id INTEGER PRIMARY KEY,
+  employee_id INTEGER,
+  task_name TEXT,
+  status TEXT,
+  FOREIGN KEY (employee_id) REFERENCES employees(id)
+);
+
+-- Create index for faster queries
+CREATE INDEX idx_employee_dept ON employees(department);`}</pre>
+        </div>
+      </CollapsibleSection>
+    </div>
+  );
+};
+
+export default SQLGuide;
