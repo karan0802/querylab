@@ -1,0 +1,88 @@
+.construction-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+    padding: 2rem;
+    padding-top: 120px;
+}
+
+.construction-content {
+    max-width: 600px;
+    text-align: center;
+    background: white;
+    padding: 3rem 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Animated Icon */
+.construction-icon {
+    position: relative;
+    margin: 0 auto 2rem;
+    width: 120px;
+    height: 120px;
+}
+
+.tools-icon {
+    color: #531294;
+    animation: swing 2s ease-in-out infinite;
+}
+
+.rocket-icon {
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    color: #ff6b6b;
+    animation: bounce 1.5s ease-in-out infinite;
+}
+
+@keyframes swing {
+    0%, 100% {
+        transform: rotate(-10deg);
+    }
+    50% {
+        transform: rotate(10deg);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Title */
+.construction-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #531294 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+/* Message */
+.construction-message {
+    font-size: 1.1rem;
+    color: #6b7280;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+/* Badge */
+.construction-badge {
+    display: inline-block;
+    margin-bottom: 2rem;
+}
+
+.badge-text {
+    background: linear-gradient(135deg, #531294 0%, #6b1bb8 100%);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
