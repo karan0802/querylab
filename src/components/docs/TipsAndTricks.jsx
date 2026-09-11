@@ -101,3 +101,106 @@ const TipsAndTricks = ({ setActiveTab }) => {
       title: 'Use Meaningful Aliases',
       description: 'Make your queries readable with clear table and column aliases.',
       details: [
+        'Use short, clear table aliases (u for users)',
+        'Rename columns for clarity',
+        'Helps in complex queries',
+        'Makes results easier to understand'
+      ],
+      example: {
+        sql: 'SELECT \n  u.name AS customer_name,\n  COUNT(o.id) AS order_count\nFROM users u\nJOIN orders o ON u.id = o.user_id\nGROUP BY u.id;',
+        mongodb: 'db.users.aggregate([\n  {\n    $project: {\n      customer_name: "$name",\n      email: "$email"\n    }\n  }\n])'
+      },
+      level: 'Intermediate',
+      color: '#5c1884ff'
+    },
+    {
+      category: 'intermediate',
+      title: 'Group Data Effectively',
+      description: 'Master GROUP BY to analyze data by categories.',
+      details: [
+        'Group by one column first',
+        'Add aggregate functions (COUNT, SUM, AVG)',
+        'Use HAVING to filter groups',
+        'Combine with ORDER BY for sorted results'
+      ],
+      example: {
+        sql: 'SELECT \n  category,\n  COUNT(*) as products,\n  AVG(price) as avg_price\nFROM products\nGROUP BY category\nORDER BY products DESC;',
+        mongodb: 'db.products.aggregate([\n  {\n    $group: {\n      _id: "$category",\n      products: { $sum: 1 },\n      avgPrice: { $avg: "$price" }\n    }\n  },\n  { $sort: { products: -1 } }\n])'
+      },
+      level: 'Intermediate',
+      color: '#5c1884ff'
+    },
+    {
+      category: 'intermediate',
+      title: 'Understand Query Execution Order',
+      description: 'Know how databases process your queries for better results.',
+      details: [
+        'FROM/JOIN happens first',
+        'WHERE filters rows',
+        'GROUP BY aggregates',
+        'HAVING filters groups',
+        'SELECT picks columns',
+        'ORDER BY sorts results',
+        'LIMIT restricts output'
+      ],
+      level: 'Intermediate',
+      color: '#5c1884ff'
+    },
+
+    // Advanced Tips
+    {
+      category: 'advanced',
+      title: 'Use Subqueries Wisely',
+      description: 'Break complex problems into smaller, manageable queries.',
+      details: [
+        'Test subquery independently first',
+        'Use in WHERE, FROM, or SELECT',
+        'Consider JOINs as alternative',
+        'Watch for performance impact'
+      ],
+      example: {
+        sql: '-- Find users with above-average spending\nSELECT name, total_spent\nFROM customers\nWHERE total_spent > (\n  SELECT AVG(total_spent)\n  FROM customers\n);',
+        mongodb: '// Use aggregation pipeline\ndb.customers.aggregate([\n  {\n    $group: {\n      _id: null,\n      avgSpent: { $avg: "$total_spent" }\n    }\n  }\n])'
+      },
+      level: 'Advanced',
+      color: '#8b5cf6'
+    },
+    {
+      category: 'advanced',
+      title: 'Leverage Indexes (Conceptually)',
+      description: 'Understand which fields benefit from indexing for faster queries.',
+      details: [
+        'Index columns used in WHERE',
+        'Index foreign key columns',
+        'Index columns used in ORDER BY',
+        'Don\'t over-index (trade-off)'
+      ],
+      level: 'Advanced',
+      color: '#8b5cf6'
+    },
+    {
+      category: 'advanced',
+      title: 'Master Aggregation Pipelines',
+      description: 'MongoDB\'s aggregation framework is powerful - learn to chain operations.',
+      details: [
+        'Each stage transforms data',
+        'Order of stages matters',
+        '$match early for performance',
+        'Use $project to shape output'
+      ],
+      example: {
+        sql: '-- Multi-step analysis\nSELECT \n  category,\n  ROUND(AVG(price), 2) as avg_price,\n  COUNT(*) as count\nFROM products\nWHERE stock > 0\nGROUP BY category\nHAVING COUNT(*) > 3\nORDER BY avg_price DESC;',
+        mongodb: 'db.products.aggregate([\n  { $match: { stock: { $gt: 0 } } },\n  {\n    $group: {\n      _id: "$category",\n      avgPrice: { $avg: "$price" },\n      count: { $sum: 1 }\n    }\n  },\n  { $match: { count: { $gt: 3 } } },\n  { $sort: { avgPrice: -1 } }\n])'
+      },
+      level: 'Advanced',
+      color: '#8b5cf6'
+    },
+    {
+      category: 'advanced',
+      title: 'Use CASE for Conditional Logic',
+      description: 'Add computed columns based on conditions.',
+      details: [
+        'CASE WHEN for if-then logic',
+        'Can use in SELECT or WHERE',
+        'Useful for categorization',
+        'MongoDB: use $cond in aggregation'
