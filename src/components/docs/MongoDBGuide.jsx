@@ -82,3 +82,87 @@ db.orders.findOne({ amount: { $gt: 1000 } })`}</pre>
       </CollapsibleSection>
 
       {/* Insert Operations */}
+      <CollapsibleSection
+        id="mongo-insert"
+        title="insert() - Adding Documents"
+        isExpanded={expandedSections['mongo-insert']}
+        toggle={toggleSection}
+      >
+        <h4>insertOne()</h4>
+        <div className="code-block">
+          <pre>{`// Insert single document
+db.users.insertOne({
+  name: "John Doe",
+  email: "john@example.com",
+  age: 30,
+  created_at: new Date()
+})`}</pre>
+        </div>
+
+        <h4>insertMany()</h4>
+        <div className="code-block">
+          <pre>{`// Insert multiple documents
+db.products.insertMany([
+  { name: "Laptop", category: "Electronics", price: 999.99 },
+  { name: "Mouse", category: "Electronics", price: 29.99 },
+  { name: "Desk", category: "Furniture", price: 199.99 }
+])`}</pre>
+        </div>
+      </CollapsibleSection>
+
+      {/* Update Operations */}
+      <CollapsibleSection
+        id="mongo-update"
+        title="update() - Modifying Documents"
+        isExpanded={expandedSections['mongo-update']}
+        toggle={toggleSection}
+      >
+        <h4>updateOne()</h4>
+        <div className="code-block">
+          <pre>{`// Update single document
+db.users.updateOne(
+  { name: "John Doe" },
+  { $set: { age: 31 } }
+)
+
+// Increment a value
+db.posts.updateOne(
+  { _id: 1 },
+  { $inc: { views: 1 } }
+)`}</pre>
+        </div>
+
+        <h4>updateMany()</h4>
+        <div className="code-block">
+          <pre>{`// Update multiple documents
+db.products.updateMany(
+  { category: "Electronics" },
+  { $set: { discount: true } }
+)
+
+// Update with multiple operations
+db.orders.updateMany(
+  { status: "pending" },
+  { 
+    $set: { status: "processing" },
+    $currentDate: { updated_at: true }
+  }
+)`}</pre>
+        </div>
+
+        <h4>Update Operators</h4>
+        <div className="code-block">
+          <pre>{`// $set - Set field value
+{ $set: { name: "New Name" } }
+
+// $inc - Increment/decrement
+{ $inc: { views: 1, stock: -1 } }
+
+// $push - Add to array
+{ $push: { tags: "new-tag" } }
+
+// $pull - Remove from array
+{ $pull: { tags: "old-tag" } }
+
+// $unset - Remove field
+{ $unset: { temporary_field: "" } }`}</pre>
