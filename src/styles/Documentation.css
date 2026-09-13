@@ -257,3 +257,261 @@
 .collapsible-header:hover {
     background: #f3f4f6;
     color: #531294;
+}
+
+.collapsible-header.active {
+    background: linear-gradient(135deg, rgba(83, 18, 148, 0.1) 0%, rgba(107, 27, 184, 0.1) 100%);
+    color: #531294;
+}
+
+.collapsible-content {
+    padding: 1.5rem;
+    background: white;
+    animation: slideDown 0.3s ease-out;
+}
+
+.collapsible-content h4 {
+    color: #531294;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.collapsible-content h4:first-child {
+    margin-top: 0;
+}
+
+.collapsible-content p {
+    color: #374151;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+/* Code Blocks */
+.code-block {
+    background: #1e1e1e;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.code-block pre {
+    margin: 0;
+    padding: 1.25rem;
+    color: #d4d4d4;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    overflow-x: auto;
+}
+
+.code-block pre::-webkit-scrollbar {
+    height: 8px;
+}
+
+.code-block pre::-webkit-scrollbar-track {
+    background: #2d2d2d;
+}
+
+.code-block pre::-webkit-scrollbar-thumb {
+    background: #531294;
+    border-radius: 4px;
+}
+
+.code-block pre::-webkit-scrollbar-thumb:hover {
+    background: #6b1bb8;
+}
+
+/* Example Cards */
+.example-card {
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.example-card h3 {
+    color: #1f2937;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.example-card > p {
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+}
+
+.example-tabs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.example-sql,
+.example-mongo {
+    background: #f9fafb;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.example-sql h4,
+.example-mongo h4 {
+    color: #531294;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Tip Cards */
+.tip-card {
+    display: flex;
+    gap: 1.5rem;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.tip-card:hover {
+    border-color: #531294;
+    box-shadow: 0 8px 20px rgba(83, 18, 148, 0.15);
+    transform: translateY(-2px);
+}
+
+.tip-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+}
+
+.tip-content h3 {
+    color: #531294;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.tip-content p {
+    color: #374151;
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+}
+
+.tip-content .code-block {
+    margin-top: 1rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 5000px;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .docs-content {
+        padding-top: 90px;
+    }
+
+    .feature-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .docs-container {
+        padding: 1rem 0.5rem;
+    }
+
+    .docs-content {
+        padding-top: 100px;
+    }
+
+    .docs-hero {
+        padding: 2rem 1.5rem;
+        border-radius: 16px;
+    }
+
+    .docs-title {
+        font-size: 1.75rem;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .title-icon {
+        font-size: 2rem;
+    }
+
+    .docs-subtitle {
+        font-size: 1rem;
+    }
+
+    .docs-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .docs-nav-btn {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .docs-main {
+        padding: 1.5rem;
+        border-radius: 10px;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .info-card {
+        padding: 1.25rem;
+    }
+
+    .info-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .numbered-list li {
+        padding-left: 2.25rem;
+        font-size: 0.95rem;
+    }
+
+    .numbered-list li::before {
+        width: 24px;
+        height: 24px;
+        font-size: 0.8rem;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
