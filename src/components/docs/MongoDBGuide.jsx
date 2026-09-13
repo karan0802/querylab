@@ -166,3 +166,86 @@ db.orders.updateMany(
 
 // $unset - Remove field
 { $unset: { temporary_field: "" } }`}</pre>
+        </div>
+      </CollapsibleSection>
+
+      {/* Delete Operations */}
+      <CollapsibleSection
+        id="mongo-delete"
+        title="delete() - Removing Documents"
+        isExpanded={expandedSections['mongo-delete']}
+        toggle={toggleSection}
+      >
+        <div className="code-block">
+          <pre>{`// Delete one document
+db.users.deleteOne({ name: "John Doe" })
+
+// Delete multiple documents
+db.orders.deleteMany({ status: "cancelled" })
+
+// Delete all documents in collection
+db.temporary_data.deleteMany({})`}</pre>
+        </div>
+      </CollapsibleSection>
+
+      {/* Aggregation */}
+      <CollapsibleSection
+        id="mongo-aggregate"
+        title="aggregate() - Advanced Queries"
+        isExpanded={expandedSections['mongo-aggregate']}
+        toggle={toggleSection}
+      >
+        <p>Aggregation pipelines process data through multiple stages.</p>
+
+        <div className="code-block">
+          <pre>{`// Count documents by category
+db.products.aggregate([
+  { $group: { _id: "$category", count: { $sum: 1 } } }
+])
+
+// Average price by category
+db.products.aggregate([
+  { 
+    $group: { 
+      _id: "$category", 
+      avgPrice: { $avg: "$price" },
+      totalProducts: { $sum: 1 }
+    } 
+  }
+])
+
+// Match, group, and sort
+db.orders.aggregate([
+  { $match: { amount: { $gt: 50 } } },
+  { $group: { _id: "$user_id", totalSpent: { $sum: "$amount" } } },
+  { $sort: { totalSpent: -1 } },
+  { $limit: 5 }
+])`}</pre>
+        </div>
+      </CollapsibleSection>
+
+      {/* Count Documents */}
+      <CollapsibleSection
+        id="mongo-count"
+        title="countDocuments() - Counting"
+        isExpanded={expandedSections['mongo-count']}
+        toggle={toggleSection}
+      >
+        <div className="code-block">
+          <pre>{`// Count all documents
+db.users.countDocuments()
+
+// Count with filter
+db.orders.countDocuments({ amount: { $gt: 100 } })
+
+// Count by category
+db.products.countDocuments({ category: "Electronics" })`}</pre>
+        </div>
+      </CollapsibleSection>
+    </div>
+  );
+};
+
+export default MongoDBGuide;
+
+
