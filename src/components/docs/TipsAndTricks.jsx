@@ -204,3 +204,106 @@ const TipsAndTricks = ({ setActiveTab }) => {
         'Can use in SELECT or WHERE',
         'Useful for categorization',
         'MongoDB: use $cond in aggregation'
+      ],
+      example: {
+        sql: 'SELECT \n  name,\n  total_spent,\n  CASE\n    WHEN total_spent > 2000 THEN \'VIP\'\n    WHEN total_spent > 1000 THEN \'Premium\'\n    ELSE \'Regular\'\n  END as tier\nFROM customers;',
+        mongodb: 'db.customers.aggregate([\n  {\n    $addFields: {\n      tier: {\n        $switch: {\n          branches: [\n            { case: { $gt: ["$total_spent", 2000] }, then: "VIP" },\n            { case: { $gt: ["$total_spent", 1000] }, then: "Premium" }\n          ],\n          default: "Regular"\n        }\n      }\n    }\n  }\n])'
+      },
+      level: 'Advanced',
+      color: '#8b5cf6'
+    },
+
+    // Performance Tips
+    {
+      category: 'performance',
+      title: 'Filter Early, Aggregate Late',
+      description: 'Reduce data volume before performing expensive operations.',
+      details: [
+        'WHERE before GROUP BY in SQL',
+        '$match early in MongoDB pipeline',
+        'Reduces data to process',
+        'Significantly faster queries'
+      ],
+      example: {
+        sql: '-- Good: Filter first\nSELECT category, AVG(price)\nFROM products\nWHERE stock > 0  -- Filter early\nGROUP BY category;',
+        mongodb: '// Good: Match early\ndb.products.aggregate([\n  { $match: { stock: { $gt: 0 } } },  // Filter early\n  { $group: { _id: "$category", avgPrice: { $avg: "$price" } } }\n])'
+      },
+      level: 'Performance',
+      color: '#520c72ff'
+    },
+    {
+      category: 'performance',
+      title: 'Select Only What You Need',
+      description: 'Don\'t use SELECT * - specify columns to reduce data transfer.',
+      details: [
+        'List specific columns needed',
+        'Faster data transfer',
+        'Less memory usage',
+        'Clearer intent in code'
+      ],
+      example: {
+        sql: '-- Bad\nSELECT * FROM users;\n\n-- Good\nSELECT id, name, email FROM users;',
+        mongodb: '// Bad\ndb.users.find()\n\n// Good  \ndb.users.find({}, { name: 1, email: 1 })'
+      },
+      level: 'Performance',
+      color: '#520c72ff'
+    },
+    {
+      category: 'performance',
+      title: 'Use LIMIT for Large Datasets',
+      description: 'Always limit results when exploring data.',
+      details: [
+        'Prevents overwhelming results',
+        'Faster query execution',
+        'Better for testing',
+        'Pagination for full data'
+      ],
+      level: 'Performance',
+      color: '#520c72ff'
+    },
+    {
+      category: 'performance',
+      title: 'Avoid Complex Calculations in WHERE',
+      description: 'Filter on indexed columns directly when possible.',
+      details: [
+        'Functions on columns prevent index use',
+        'Pre-calculate if possible',
+        'Consider computed columns',
+        'Test query performance'
+      ],
+      level: 'Performance',
+      color: '#520c72ff'
+    }
+  ];
+
+  const filteredTips = activeCategory === 'all' 
+    ? tips 
+    : tips.filter(tip => tip.category === activeCategory);
+
+  return (
+    <div className="docs-section tips-section">
+      <h2 className="section-title">Tips & Best Practices</h2>
+      
+      <p className="tips-intro">
+        Level up your database query skills! From beginner basics to advanced techniques,
+        master SQL and MongoDB with these practical tips and real-world examples.
+      </p>
+
+      {/* Category Filter */}
+      <div className="tips-categories">
+        {categories.map(cat => (
+          <button
+            key={cat.id}
+            className={`category-btn ${activeCategory === cat.id ? 'active' : ''}`}
+            onClick={() => setActiveCategory(cat.id)}
+          >
+            <span className="category-icon">{cat.icon}</span>
+            <span>{cat.name}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Tips Grid */}
+      <div className="tips-grid">
+        {filteredTips.map((tip, idx) => (
+          <div key={idx} className="tip-card-new">
