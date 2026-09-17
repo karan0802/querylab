@@ -223,3 +223,116 @@ SELECT
   category,
   price,
   stock,
+  CASE 
+    WHEN stock = 0 THEN 'OUT OF STOCK'
+    WHEN stock < 10 THEN 'LOW STOCK'
+    ELSE 'SUFFICIENT'
+  END as stock_status
+FROM products
+WHERE stock < 20
+ORDER BY stock ASC;`,
+          mongodb: `// Products needing restock
+db.products.find({
+  stock: { $lt: 20 }
+})
+.sort({ stock: 1 })
+.forEach(product => {
+  print(product.name + 
+    ": " + product.stock + 
+    " units (" + 
+    (product.stock === 0 ? "OUT OF STOCK" : 
+     product.stock < 10 ? "LOW" : "OK") + 
+    ")")
+})`,
+          result: 'Returns: 3 products needing attention'
+        },
+        {
+          title: 'Product Performance by Category',
+          description: 'Sales metrics grouped by category',
+          sql: `-- Category performance analysis
+SELECT 
+  category,
+  COUNT(*) as product_count,
+  AVG(price) as avg_price,
+  MIN(price) as lowest_price,
+  MAX(price) as highest_price,
+  AVG(rating) as avg_rating,
+  SUM(stock) as total_inventory
+FROM products
+GROUP BY category
+ORDER BY avg_price DESC;`,
+          mongodb: `// Category-wise product analysis
+db.products.aggregate([
+  {
+    $group: {
+      _id: "$category",
+      productCount: { $sum: 1 },
+      avgPrice: { $avg: "$price" },
+      minPrice: { $min: "$price" },
+      maxPrice: { $max: "$price" },
+      avgRating: { $avg: "$rating" },
+      totalStock: { $sum: "$stock" }
+    }
+  },
+  { $sort: { avgPrice: -1 } }
+])`,
+          result: 'Returns: Statistics per category'
+        },
+        {
+          title: 'Premium Customer Analysis',
+          description: 'Identify and analyze high-value customers',
+          sql: `-- Premium customers (spent > $1000)
+SELECT 
+  name,
+  email,
+  city,
+  total_spent,
+  CASE 
+    WHEN total_spent > 2000 THEN 'VIP'
+    WHEN total_spent > 1000 THEN 'Premium'
+    ELSE 'Regular'
+  END as customer_tier
+FROM customers
+WHERE total_spent > 1000
+ORDER BY total_spent DESC;`,
+          mongodb: `// Segment customers by spending
+db.customers.find({
+  total_spent: { $gt: 1000 }
+})
+.sort({ total_spent: -1 })
+
+// With computed tier
+db.customers.aggregate([
+  {
+    $match: { total_spent: { $gt: 1000 } }
+  },
+  {
+    $addFields: {
+      tier: {
+        $switch: {
+          branches: [
+            { case: { $gt: ["$total_spent", 2000] }, then: "VIP" },
+            { case: { $gt: ["$total_spent", 1000] }, then: "Premium" }
+          ],
+          default: "Regular"
+        }
+      }
+    }
+  },
+  { $sort: { total_spent: -1 } }
+])`,
+          result: 'Returns: 2 premium customers'
+        },
+        {
+          title: 'Product Recommendation System',
+          description: 'Best-rated affordable products',
+          sql: `-- Top value products
+SELECT 
+  name,
+  category,
+  price,
+  rating,
+  stock,
+  ROUND(rating / (price / 100), 2) as value_score
+FROM products
+WHERE rating >= 4.0 
