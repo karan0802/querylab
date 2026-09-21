@@ -307,3 +307,105 @@ const TipsAndTricks = ({ setActiveTab }) => {
       <div className="tips-grid">
         {filteredTips.map((tip, idx) => (
           <div key={idx} className="tip-card-new">
+            <div className="tip-header-new">
+              <div className="tip-level-badge" style={{ backgroundColor: tip.color }}>
+                {tip.level}
+              </div>
+              <h3 className="tip-title-new">{tip.title}</h3>
+            </div>
+
+            <p className="tip-description">{tip.description}</p>
+
+            {tip.details && (
+              <div className="tip-details">
+                <h4>Key Points:</h4>
+                <ul>
+                  {tip.details.map((detail, i) => (
+                    <li key={i}>
+                      <FaCheckCircle className="check-icon" />
+                      {detail}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {tip.example && (
+              <div className="tip-examples">
+                <div className="tip-example-panel">
+                  <div className="example-label">SQL</div>
+                  <pre><code>{tip.example.sql}</code></pre>
+                </div>
+                <div className="tip-example-panel">
+                  <div className="example-label">MongoDB</div>
+                  <pre><code>{tip.example.mongodb}</code></pre>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Learning Path CTA */}
+      <div className="learning-path-cta">
+        <div className="cta-content">
+          <FaGraduationCap className="cta-icon" />
+          <h3>Ready to Practice?</h3>
+          <p>
+            Apply these tips in the query editor! Start with beginner tips and work your way up.
+            Remember: consistent practice is the key to mastery.
+          </p>
+          <div className="cta-buttons">
+            <a href="/" className="cta-button primary">
+              <FaCode /> Open Query Editor
+            </a>
+            <a >
+              <button onClick={() => {setActiveTab('examples'); window.scrollTo(0, 0); }} className="cta-button secondary">
+                <FaDatabase /> View Examples
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Quick Reference */}
+      <div className="quick-reference">
+        <h3>Quick Reference</h3>
+        <div className="reference-grid">
+          <div className="reference-card">
+            <h4>Learning Path</h4>
+            <ol>
+              <li>Start with simple SELECT queries</li>
+              <li>Master filtering with WHERE</li>
+              <li>Learn JOINs for relationships</li>
+              <li>Practice GROUP BY for analysis</li>
+              <li>Explore advanced techniques</li>
+            </ol>
+          </div>
+          <div className="reference-card">
+            <h4>Best Practices</h4>
+            <ul>
+              <li>Always view schema first</li>
+              <li>Test queries with LIMIT</li>
+              <li>Use meaningful aliases</li>
+              <li>Comment complex queries</li>
+              <li>Learn from errors (use AI help!)</li>
+            </ul>
+          </div>
+          <div className="reference-card">
+            <h4>Performance Tips</h4>
+            <ul>
+              <li>Filter data early</li>
+              <li>Select only needed columns</li>
+              <li>Use indexes effectively</li>
+              <li>Avoid functions in WHERE</li>
+              <li>Limit result sets</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TipsAndTricks;
