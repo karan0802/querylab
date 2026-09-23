@@ -105,3 +105,110 @@
    GEMINI_API_KEY=your_gemini_api_key
    
    # EmailJS (Optional - for contact form)
+   NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_service_id
+   NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id
+   NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
+   ```
+
+4. **Run development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser**
+   
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+---
+
+## 🗄️ MongoDB Atlas Setup
+
+### Step 1: Create Free Account
+1. Visit [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register)
+2. Sign up for a free account
+3. Verify your email
+
+### Step 2: Create Cluster
+1. Click "Build a Database"
+2. Select **FREE** M0 tier
+3. Choose **AWS** and nearest region
+4. Click "Create"
+
+### Step 3: Configure Access
+1. **Database Access:**
+   - Add new database user
+   - Username: `querylab_user`
+   - Generate secure password (save it!)
+   - Role: "Read and write to any database"
+
+2. **Network Access:**
+   - Add IP Address
+   - Select "Allow Access from Anywhere" (0.0.0.0/0)
+   - Confirm
+
+### Step 4: Get Connection String
+1. Click "Connect" on your cluster
+2. Choose "Connect your application"
+3. Copy connection string
+4. Replace `<password>` with your actual password
+5. Add to `.env.local`
+
+---
+
+## 📦 Tech Stack
+
+### Frontend
+- **Next.js 14** - React framework with App Router
+- **React 18** - UI library
+- **Monaco Editor** - Code editor with syntax highlighting
+- **Bootstrap 5** - Responsive UI components
+- **React Icons** - Icon library
+
+### Backend
+- **Next.js API Routes** - Serverless functions
+- **MongoDB Node Driver** - Database connectivity
+- **sql.js** - SQLite in the browser
+
+### AI & Services
+- **Google Gemini** - AI-powered error explanations
+- **EmailJS** - Contact form service
+
+### Database
+- **MongoDB Atlas** - Cloud MongoDB (free tier)
+- **SQLite (sql.js)** - Client-side SQL database
+
+---
+
+## 📁 Project Structure
+
+```
+querylab/
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── mongodb-query/
+│   │   │   │   └── route.js          # MongoDB query execution
+│   │   │   ├── cleanup-sessions/
+│   │   │   │   └── route.js          # Auto-cleanup old sessions
+│   │   │   └── ask-gemini/
+│   │   │       └── route.js          # AI help integration
+│   │   ├── about/
+│   │   ├── databases/
+│   │   ├── documentation/
+│   │   ├── layout.js
+│   │   ├── page.jsx
+│   │   └── globals.css
+│   ├── components/
+│   │   ├── docs/
+│   │   │   ├── CollapsibleSection.jsx
+│   │   │   ├── Examples.jsx
+│   │   │   ├── GettingStarted.jsx
+│   │   │   ├── MongoDBGuide.jsx
+│   │   │   ├── SQLGuide.jsx
+│   │   │   └── TipsAndTricks.jsx
+│   │   ├── ClientLayout.jsx          # Client-side wrapper
+│   │   ├── Contact.jsx               # Contact modal
+│   │   ├── Navbar.jsx                # Navigation bar
+│   │   └── QueryTab.jsx              # Main query interface
+│   ├── data/
+│   │   └── SampleQueries.js          # Sample queries & data
