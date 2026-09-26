@@ -336,3 +336,115 @@ SELECT
   ROUND(rating / (price / 100), 2) as value_score
 FROM products
 WHERE rating >= 4.0 
+  AND price < 200
+  AND stock > 0
+ORDER BY value_score DESC
+LIMIT 5;`,
+          mongodb: `// Best value products
+db.products.find({
+  rating: { $gte: 4.0 },
+  price: { $lt: 200 },
+  stock: { $gt: 0 }
+})
+.sort({ rating: -1, price: 1 })
+.limit(5)`,
+          result: 'Returns: Top 5 best-value products'
+        }
+      ]
+    }
+  };
+
+  const current = examples[activeExample];
+
+  return (
+    <div className="docs-section examples-section">
+      <h2 className="section-title">Practical Examples</h2>
+      
+      <p className="examples-intro">
+        Learn by example! Each scenario includes both SQL and MongoDB solutions with 
+        explanations and expected results.
+      </p>
+
+      {/* Database Selector */}
+      <div className="example-selector">
+        {Object.entries(examples).map(([key, data]) => (
+          <button
+            key={key}
+            className={`example-selector-btn ${activeExample === key ? 'active' : ''}`}
+            onClick={() => setActiveExample(key)}
+            style={{ 
+              '--example-color': data.color,
+              borderColor: activeExample === key ? data.color : '#e5e7eb'
+            }}
+          >
+            <span className="selector-icon" style={{ color: data.color }}>
+              {data.icon}
+            </span>
+            <span className="selector-text">
+              <strong>{data.title}</strong>
+              <small>{data.description}</small>
+            </span>
+          </button>
+        ))}
+      </div>
+
+      {/* Scenarios */}
+      <div className="scenarios-container">
+        {current.scenarios.map((scenario, idx) => (
+          <div key={idx} className="scenario-card">
+            <div className="scenario-header">
+              <div className="scenario-number" style={{ backgroundColor: current.color }}>
+                {idx + 1}
+              </div>
+              <div className="scenario-title-block">
+                <h3>{scenario.title}</h3>
+                <p>{scenario.description}</p>
+              </div>
+            </div>
+
+            <div className="code-comparison">
+              <div className="code-panel sql-panel">
+                <div className="panel-header">
+                  <FaDatabase />
+                  <span>SQL Solution</span>
+                </div>
+                <div className="code-block">
+                  <pre>{scenario.sql}</pre>
+                </div>
+              </div>
+
+              <div className="code-panel mongo-panel">
+                <div className="panel-header">
+                  <FaDatabase />
+                  <span>MongoDB Solution</span>
+                </div>
+                <div className="code-block">
+                  <pre>{scenario.mongodb}</pre>
+                </div>
+              </div>
+            </div>
+
+            <div className="result-box" style={{ borderLeftColor: current.color }}>
+              <FaChartLine style={{ color: current.color }} />
+              <span><strong>Expected Result:</strong> {scenario.result}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Call to Action */}
+      <div className="examples-cta">
+        <div className="cta-content">
+          <FaCode className="cta-icon" />
+          <h3>Ready to Try These Yourself?</h3>
+          <p>Head to the query editor and test these examples with real data!</p>
+          <a href="/" className="cta-button">
+            Open Query Editor →
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Examples;
