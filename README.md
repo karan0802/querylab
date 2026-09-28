@@ -212,3 +212,110 @@ querylab/
 │   │   └── QueryTab.jsx              # Main query interface
 │   ├── data/
 │   │   └── SampleQueries.js          # Sample queries & data
+│   ├── lib/
+│   │   └── sqlite-manager.js         # SQLite helper functions
+│   └── styles/
+│       ├── Contact.css
+│       ├── Navbar.css
+│       └── QueryTab.css
+├── public/
+├── .env.local                         # Environment variables (create this)
+├── .gitignore
+├── vercel.json                        # Vercel cron config
+├── package.json
+├── next.config.js
+├── LICENSE
+└── README.md
+```
+
+---
+
+## 🎮 Usage Guide
+
+### SQL Mode
+
+1. **Select Database Type**: Choose from Users & Orders, Blog, E-commerce, or Custom
+2. **View Schema**: Click "Show" to see table structure
+3. **Write Query**: Use the Monaco editor with syntax highlighting
+4. **Execute**: Click "Execute Query" or press the play button
+5. **View Results**: See results in a formatted table
+
+**Example SQL Queries:**
+```sql
+-- Find all users
+SELECT * FROM users;
+
+-- Join users with orders
+SELECT u.name, COUNT(o.id) as order_count
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+GROUP BY u.id;
+
+-- Filter by condition
+SELECT * FROM orders WHERE amount > 100;
+```
+
+### MongoDB Mode
+
+1. **Select Database Type**: Choose from Users & Orders, Blog, E-commerce, or Custom
+2. **View Schema**: Click "Show" to see collection structure
+3. **Write Query**: Use MongoDB query syntax
+4. **Execute**: Click "Execute Query"
+5. **View Results**: See results in JSON format
+
+**Example MongoDB Queries:**
+```javascript
+// Find all users
+db.users.find()
+
+// Find with filter
+db.orders.find({ amount: { $gt: 100 } })
+
+// Sort and limit
+db.posts.find().sort({ views: -1 })
+
+// Count documents
+db.users.countDocuments()
+```
+
+### AI Help Feature
+
+1. Execute a query with an error
+2. Click "Ask Gemini for Help"
+3. Get AI-powered explanation and fix suggestions
+4. Learn from the mistakes
+
+---
+
+## 🚢 Deployment
+
+### Deploy to Vercel
+
+1. **Push to GitHub**
+   ```bash
+   git add .
+   git commit -m "Initial commit"
+   git push origin main
+   ```
+
+2. **Import to Vercel**
+   - Visit [vercel.com](https://vercel.com)
+   - Click "New Project"
+   - Import your GitHub repository
+
+3. **Add Environment Variables**
+   - Go to Project Settings → Environment Variables
+   - Add `MONGODB_URI` (and optionally `GEMINI_API_KEY`)
+   - Check: Production, Preview, Development
+
+4. **Deploy**
+   - Click "Deploy"
+   - Wait 2-3 minutes
+   - Your site is live! 🎉
+
+### Automatic Session Cleanup
+
+The app automatically cleans up sessions older than 24 hours using Vercel Cron Jobs (configured in `vercel.json`):
+- Runs daily at 3 AM UTC
+- Deletes old session collections
+- Keeps MongoDB storage under control
