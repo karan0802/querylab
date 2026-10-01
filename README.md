@@ -319,3 +319,109 @@ The app automatically cleans up sessions older than 24 hours using Vercel Cron J
 - Runs daily at 3 AM UTC
 - Deletes old session collections
 - Keeps MongoDB storage under control
+
+---
+
+## 🎯 Use Cases
+
+### For Students
+- Learn SQL and MongoDB syntax
+- Practice queries without installation
+- Get immediate feedback on errors
+- Experiment safely with isolated data
+
+### For Educators
+- Provide hands-on database exercises
+- No setup required for students
+- Track common query mistakes
+- Share live examples during lectures
+
+### For Developers
+- Quick SQL/MongoDB testing
+- Prototype queries before production
+- Compare SQL vs MongoDB syntax
+- Refresh database skills
+
+---
+
+## 🤝 Contributing
+
+QueryLab is a solo passion project, but contributions are welcome! Whether it's bug reports, feature suggestions, or code contributions, I appreciate all help.
+
+### How to Contribute:
+
+1. Fork the repository: [github.com/manavbansal1/query-lab](https://github.com/manavbansal1/query-lab)
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+### Ways to Help:
+- 🐛 Report bugs you encounter
+- 💡 Suggest new features or improvements
+- 📝 Improve documentation
+- 🎨 Enhance UI/UX design
+- 🧪 Write tests
+- 🌐 Add translations
+
+Every contribution, no matter how small, is valued! 🙏
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- **sql.js** - SQLite compiled to JavaScript
+- **MongoDB Atlas** - Free cloud MongoDB hosting
+- **Google Gemini** - AI-powered help
+- **Next.js** - Amazing React framework
+- **Vercel** - Seamless deployment platform
+
+---
+
+## 💜 About the Creator
+
+QueryLab is built and maintained by **Manav Bansal**, a solo developer passionate about making database education accessible to everyone. This is a passion project created in my free time to help students and developers learn databases without installation barriers.
+
+If QueryLab has helped you, please consider:
+- ⭐ **Starring the repository** on GitHub
+- 📢 **Sharing** it with friends and colleagues
+- 🐛 **Reporting bugs** or suggesting features
+- 💬 **Spreading the word** on social media
+
+Your support and feedback drive this project forward! 🙏
+
+---
+
+## 📧 Contact
+
+**Manav Bansal** - Developer & Creator
+
+- 📧 Email: bansalmanav39@gmail.com
+- 🐙 GitHub: [@manavbansal1](https://github.com/manavbansal1)
+- 🌐 Live Site: [query-lab.vercel.app](https://query-lab.vercel.app/)
+
+**Project Repository:** [github.com/manavbansal1/query-lab](https://github.com/manavbansal1/query-lab)
+
+---
+
+## 🌟 Support the Project
+
+If you find QueryLab helpful, please consider:
+
+- ⭐ **[Star the repository](https://github.com/manavbansal1/query-lab)** on GitHub
+- 🐛 **[Report bugs](https://github.com/manavbansal1/query-lab/issues)** you encounter
+- 💡 **[Suggest features](https://github.com/manavbansal1/query-lab/issues)** you'd like to see
+- 📢 **Share** QueryLab with friends, colleagues, and students
+- 💬 **Spread the word** on social media
+
+Your support helps QueryLab grow and improve! 🙏
+
+---
+
+**Made with 💜 by [Manav Bansal](https://github.com/manavbansal1) for students learning databases**
