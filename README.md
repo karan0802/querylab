@@ -348,14 +348,6 @@ The app automatically cleans up sessions older than 24 hours using Vercel Cron J
 
 QueryLab is a solo passion project, but contributions are welcome! Whether it's bug reports, feature suggestions, or code contributions, I appreciate all help.
 
-### How to Contribute:
-
-1. Fork the repository: [github.com/manavbansal1/query-lab](https://github.com/manavbansal1/query-lab)
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
 ### Ways to Help:
 - 🐛 Report bugs you encounter
 - 💡 Suggest new features or improvements
@@ -396,27 +388,9 @@ If QueryLab has helped you, please consider:
 
 Your support and feedback drive this project forward! 🙏
 
----
-
-## 📧 Contact
-
-**Manav Bansal** - Developer & Creator
-
-- 📧 Email: bansalmanav39@gmail.com
-- 🐙 GitHub: [@manavbansal1](https://github.com/manavbansal1)
-- 🌐 Live Site: [query-lab.vercel.app](https://query-lab.vercel.app/)
-
-**Project Repository:** [github.com/manavbansal1/query-lab](https://github.com/manavbansal1/query-lab)
-
----
-
 ## 🌟 Support the Project
 
 If you find QueryLab helpful, please consider:
-
-- ⭐ **[Star the repository](https://github.com/manavbansal1/query-lab)** on GitHub
-- 🐛 **[Report bugs](https://github.com/manavbansal1/query-lab/issues)** you encounter
-- 💡 **[Suggest features](https://github.com/manavbansal1/query-lab/issues)** you'd like to see
 - 📢 **Share** QueryLab with friends, colleagues, and students
 - 💬 **Spread the word** on social media
 
@@ -424,4 +398,4 @@ Your support helps QueryLab grow and improve! 🙏
 
 ---
 
-**Made with 💜 by [Manav Bansal](https://github.com/manavbansal1) for students learning databases**
+**Made with 💜  for students learning databases**
